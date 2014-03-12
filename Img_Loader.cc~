@@ -1,0 +1,8 @@
+#include "Img_Loader.hh"
+
+using namespace std;
+
+Img_Loader::Img_Loader(string file) {
+  SDL_Surface * surf = NULL;
+  surf = SDL_LoadBMP(file.c_str());
+}

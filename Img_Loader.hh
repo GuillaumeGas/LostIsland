@@ -4,6 +4,8 @@
 
 #include <iostream>
 #include <vector>
+#include <SDL/SDL.h>
+#include <SDL/SDL_image.h>
 
 class Img_Loader {
 public:

@@ -40,14 +40,6 @@ void dessine() {
     glColor3d(1,1,1);
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-    glTexCoordPointer(3, GL_FLOAT, 0, somm);
-    glVertexPointer(3, GL_FLOAT, 0, somm);
-    /* glDrawElements(GL_TRIANGLES, 6*3, GL_UNSIGNED_INT, pignons);
-    glColor3d(1,0,1);
-    glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, toit);
-    glColor3d(1,1,0);
-    glDrawElements(GL_TRIANGLES, 18, GL_UNSIGNED_INT, murs);*/
-    glDrawElements(GL_TRIANGLES, nb_int*3, GL_UNSIGNED_INT, index_);
 
 }
 
@@ -61,10 +53,6 @@ void display(void)
   glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ); //vide r√àellement la fen√çtre
   glLoadIdentity();
   glColor3d(1,1,0);
-  glTranslated(0,hauteur,0);
-  glTranslated(0,0,dist);
-    glRotated(angle, 0,1,0);
-    //glRotated(angle, 1,0,0);
   dessine();
   glutSwapBuffers();
 }
@@ -92,12 +80,6 @@ void reshape (int w, int h)
 
 void key(unsigned char key,int x,int y) {
   switch ( key ) {
-  case 'w'  : R-=0.1f;printf(" %f -Rayon \n",R);						
-    break;
-  case 'x'  : R+=0.1f; printf(" %f +Rayon \n",R);			       
-    break;			
-  case 'z' : hauteur -= 0.1; break;
-  case 's' : hauteur -= 0.1; break;
   case 0x1B : exit(0); }
   MyReDisplay();
 }
@@ -150,7 +132,6 @@ void Menu2(int selection)
 
 void spinDisplay(void)
 {
-    angle++;
   glutPostRedisplay();
 }
 
@@ -160,7 +141,7 @@ void spinDisplay(void)
 int main(int argc, char** argv)
 {
 	
-  glutInit(&argc, argv); 
+    /*  glutInit(&argc, argv); 
 
   glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB  | GLUT_DEPTH ); 
   glutInitWindowSize (50,50);
@@ -191,7 +172,7 @@ int main(int argc, char** argv)
 	
 	
 
-  glutMainLoop();
+  glutMainLoop();*/
   return 0;   
 }
 

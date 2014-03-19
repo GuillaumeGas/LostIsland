@@ -1,2 +1,2 @@
-out: main.cc High_Calc.hh High_Calc.hh
-	g++ -std=c++0x -o out main.cc High_Calc.cc -lglut -lGL -lGLU
+out: main.cc *.hh *.cc
+	g++ -g -std=c++0x -o out main.cc High_Calc.cc Img_Loader.cc -lglut -lGL -lGLU -lSDL -lSDL_image

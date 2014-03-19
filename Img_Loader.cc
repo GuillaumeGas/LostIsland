@@ -1,11 +1,11 @@
 #include "Img_Loader.hh"
-
+#include <fstream>
+#include <sstream>
 using namespace std;
 
 Img_Loader::Img_Loader(string file) {
     SDL_Surface * surf = NULL;
     surf = SDL_LoadBMP(file.c_str());
-
     if(!surf) {
 	cout << "Erreur !" << endl;
     } else {
@@ -14,8 +14,10 @@ Img_Loader::Img_Loader(string file) {
 	    for(int j = 0; j < surf->h; j++) {
 		Uint8 r, g, b;
 		SDL_GetRGB(((Uint32*)surf->pixels)[i + j * surf->w], surf->format, &r, &g, &b);
-		high_map[i].push_back(r);
+		high_map[i].push_back((int)r);
+		cout << (int)r << endl;
 	    }
+	 
 	}
     }
 

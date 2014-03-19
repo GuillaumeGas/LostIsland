@@ -12,6 +12,11 @@ public:
     void genere_point();
     void genere_vertex();
     
+
+    int * get_vertex();
+    float * get_point();
+
+    int get_size();
     
 private:
     

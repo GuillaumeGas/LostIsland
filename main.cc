@@ -5,10 +5,15 @@
 #include <math.h>
 #include <ctime>
 
+#include "High_Calc.hh"
+#include "Img_Loader.hh"
+
 using namespace std;
 
+Img_Loader c( "img.bmp" );
+High_Calc h( c.get_high_map() );
 
-
+int angle = 0;
 
 void MyReDisplay(void)
 {
@@ -40,27 +45,59 @@ void dessine() {
     glColor3d(1,1,1);
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    glTexCoordPointer(3, GL_FLOAT, 0, h.get_point());
+    glVertexPointer ( 3, GL_FLOAT, 0, h.get_point() );
+    glDrawElements( GL_LINES, h.get_size()/3 , GL_UNSIGNED_INT, h.get_vertex());
+    
 
 }
 
 
 
 double dist = -10, hauteur;
+int _left = -10, up = 0, front = -50;
 
 void display(void)
 {
     framerate();
   glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ); //vide r√àellement la fen√çtre
   glLoadIdentity();
-  glColor3d(1,1,0);
+
+  glTranslated ( _left,up,front);
+  //glRotated(angle, 0,1,0);
   dessine();
   glutSwapBuffers();
 }
 
 
+
+GLubyte CheckImage0[40][40][4];
+
+void makeCheckImage() {
+    GLubyte c;
+    for(int i = 0 ; i < 40 ; i++ ) {
+	for ( int j = 0 ; j < 40 ; j++ ) {
+	    c = rand()%255;
+	    CheckImage0[i][j][0] = rand()%25 + 30;
+	    CheckImage0[i][j][1] = rand()%25 + 30;
+	    CheckImage0[i][j][2] = 0;
+	    
+	    CheckImage0[i][j][3] = 200;
+	}
+    }
+}
+
+
 void init (void) 
 {
+    makeCheckImage();
   glClearColor (0.0, 0.0, 0.0, 0.0); //√àtabli vers quelle couleur la fen√çtre sera vid√àe
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 40,40,0,GL_RGBA, GL_UNSIGNED_BYTE, CheckImage0);
+  // glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
+  // glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
+  glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_TEXTURE_2D);
 }
@@ -93,12 +130,12 @@ void GestionSpecial(int key, int x, int y)
       break;
     case GLUT_KEY_F2 : printf("F2 \n");glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);break;
 
-    case GLUT_KEY_UP: dist+=0.1; break;
-    case GLUT_KEY_DOWN: dist-=0.1; break;
+    case GLUT_KEY_UP: up+=2; break;
+    case GLUT_KEY_DOWN: up-=2; break;
 	
-    case GLUT_KEY_LEFT : hauteur+=2;printf("Gauche\n ");
+    case GLUT_KEY_LEFT : _left+=2;printf("Gauche\n ");
       break; 
-    case GLUT_KEY_RIGHT : hauteur-=2; printf("Droite \n");break; 
+    case GLUT_KEY_RIGHT : _left-=2; printf("Droite \n");break; 
     }	
   printf("position de la souris : ");
   printf("%d,%d ",x,y);
@@ -133,6 +170,7 @@ void Menu2(int selection)
 void spinDisplay(void)
 {
   glutPostRedisplay();
+  angle +=1 ;
 }
 
 
@@ -140,40 +178,41 @@ void spinDisplay(void)
 
 int main(int argc, char** argv)
 {
+
+    
 	
-    /*  glutInit(&argc, argv); 
+    glutInit(&argc, argv); 
 
-  glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB  | GLUT_DEPTH ); 
-  glutInitWindowSize (50,50);
-  glutInitWindowPosition (100, 350);
-  glutCreateWindow ("Second Window"); 
-  init ();
-  glutReshapeFunc(reshape);
-  glutKeyboardFunc(key);
-  glutSpecialFunc(GestionSpecial);
-  glutDisplayFunc(display); 
-  glutIdleFunc(spinDisplay);
+    glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB  | GLUT_DEPTH ); 
+    glutInitWindowSize (500,500);
+    glutInitWindowPosition (100, 350);
+    glutCreateWindow ("Second Window"); 
+    init ();
+    glutReshapeFunc(reshape);
+    glutKeyboardFunc(key);
+    glutSpecialFunc(GestionSpecial);
+    glutDisplayFunc(display); 
+    glutIdleFunc(spinDisplay);
 
 	
-  int sMenu;
-  sMenu = glutCreateMenu(Menu2);
-  glutAddMenuEntry("toto",0);
-  glutAddMenuEntry("titi",1);
+    int sMenu;
+    sMenu = glutCreateMenu(Menu2);
+    glutAddMenuEntry("toto",0);
+    glutAddMenuEntry("titi",1);
 
-  int mainMenu;
-  mainMenu = glutCreateMenu(Effets);
-  glutAddMenuEntry("Mode plein",0);
-  glutAddMenuEntry("Mode fil de fer",1);
-  glutAddMenuEntry("Quitter",2);
-  glutAddSubMenu("Maillages",
-		 sMenu);
+    int mainMenu;
+    mainMenu = glutCreateMenu(Effets);
+    glutAddMenuEntry("Mode plein",0);
+    glutAddMenuEntry("Mode fil de fer",1);
+    glutAddMenuEntry("Quitter",2);
+    glutAddSubMenu("Maillages",sMenu);
 
-  glutAttachMenu(GLUT_LEFT_BUTTON);	
+    glutAttachMenu(GLUT_LEFT_BUTTON);	
 	
 	
 
-  glutMainLoop();*/
-  return 0;   
+    glutMainLoop();
+    return 0;   
 }
 
 

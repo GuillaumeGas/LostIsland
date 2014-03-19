@@ -2,12 +2,13 @@
 #define _HIGH_CALC
 
 #include <vector>
+#include <math.h>
 
 class High_Calc {
 
 public:
     
-    High_Calc ( std::vector < std::vector < int > > );
+    High_Calc ( std::vector < int > );
 
     void genere_point();
     void genere_vertex();
@@ -16,14 +17,17 @@ public:
     int * get_vertex();
     float * get_point();
 
+    int get_w();
+
     int get_size();
     
 private:
     
-    std::vector < std::vector < int > > height;
+    std::vector < int > height;
     float * point;
     int size;
     int * vert;
+    int W;
 };
 
 

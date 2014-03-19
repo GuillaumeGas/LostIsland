@@ -12,11 +12,11 @@ public:
     
     Img_Loader ( std::string file );
 
-    std::vector < std::vector < int > > get_high_map();
+    std::vector < int > get_high_map();
 
 private:
 
-    std::vector < std::vector < int > > high_map;
+    std::vector <  int > high_map;
 
 };
 

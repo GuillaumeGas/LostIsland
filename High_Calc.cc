@@ -2,19 +2,12 @@
 #include <iostream>
 using namespace std;
 
-High_Calc::High_Calc ( vector < vector < int > > v ) {
-    int i = 0;
-    point = new float[ (v.size() * v[0].size()) * 3];
-    size = (v.size() * v[0].size()) * 3;
-    cout << size << endl;
-    vert = new int [ size/3 ];
-    
+High_Calc::High_Calc ( vector <int> v ) {
+    W = sqrt(v.size());
+    vert = new int[W * 2 * W];
+    point = new float[ W * W * 3];
     for ( auto it : v ) {
-	height.push_back ( vector < int >() );
-	for ( auto it2 : it ) {
-	    height[i].push_back ( (it2 - 128) / 10.0 );
-	}
-	i++;
+	height.push_back ( (it - 128) );
     }
     genere_point();
     genere_vertex();
@@ -23,20 +16,31 @@ High_Calc::High_Calc ( vector < vector < int > > v ) {
 
 void High_Calc::genere_point ( ) {
     int c = 0;
-    for ( int i = 0 ; i < height.size() ; i ++ ) {
-	for ( int j = 0 ; j < height.size(); j ++ ) {
+    for ( int j = 0 ; j < W ; j++ ) {
+	for ( int i = 0 ; i < W ; i ++ ) {
 	    point [ c ] = j;
-	    point [ c + 1 ] = height[i][j]/10.0;
 	    point [ c + 2 ] = i;
+	    point [ c + 1 ] = height[i + j * W];
 	    c += 3;
+
 	}
     }
 }
 
 
+int High_Calc::get_w() {
+    return W;
+}
+
+
 void High_Calc::genere_vertex ( ) {
-    for (int i = 0 ; i < size/3 ; i++ ) {
-	vert[i] = i;
+    int c = 0;
+    for ( int i = 0 ; i < W ; i++) {
+	for ( int j = 0 ; j < W ; j++ ) {
+	    vert[c] = j + i * W;
+	    vert[c+1] = j + W + i * W;
+	    c+=2;
+	}
     }
 }
 

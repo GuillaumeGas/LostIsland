@@ -47,7 +47,11 @@ void dessine() {
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
     glTexCoordPointer(3, GL_FLOAT, 0, h.get_point());
     glVertexPointer ( 3, GL_FLOAT, 0, h.get_point() );
-    glDrawElements( GL_LINES, h.get_size()/3 , GL_UNSIGNED_INT, h.get_vertex());
+    int w = h.get_w();
+    for ( int i = 0 ; i < w - 1 ; i++) { 
+	glDrawElements( GL_TRIANGLE_STRIP , h.get_w()*2 , GL_UNSIGNED_INT, &h.get_vertex()[w * 2 * i]);
+    }
+
     
 
 }
@@ -64,7 +68,7 @@ void display(void)
   glLoadIdentity();
 
   glTranslated ( _left,up,front);
-  //glRotated(angle, 0,1,0);
+  glRotated(angle, 0,1,0);
   dessine();
   glutSwapBuffers();
 }
@@ -78,9 +82,9 @@ void makeCheckImage() {
     for(int i = 0 ; i < 40 ; i++ ) {
 	for ( int j = 0 ; j < 40 ; j++ ) {
 	    c = rand()%255;
-	    CheckImage0[i][j][0] = rand()%25 + 30;
-	    CheckImage0[i][j][1] = rand()%25 + 30;
-	    CheckImage0[i][j][2] = 0;
+	    CheckImage0[i][j][0] = rand()%255;
+	    CheckImage0[i][j][1] = rand()%255;
+	    CheckImage0[i][j][2] = rand()%255;
 	    
 	    CheckImage0[i][j][3] = 200;
 	}
@@ -108,7 +112,7 @@ void reshape (int w, int h)
   glViewport (0, 0, (GLsizei) w, (GLsizei) h); 
   glMatrixMode (GL_PROJECTION);
   glLoadIdentity ();
-  gluPerspective(70.0, (GLfloat) w/(GLfloat) h, 0.01, 100.0);
+  gluPerspective(70.0, (GLfloat) w/(GLfloat) h, 0.01, 1000.0);
   glMatrixMode(GL_MODELVIEW);
 
 }
@@ -117,6 +121,14 @@ void reshape (int w, int h)
 
 void key(unsigned char key,int x,int y) {
   switch ( key ) {
+  case 'z':
+      front+=2; break;
+  case 's':
+      front -= 2; break;
+  case 'e':
+      angle++; break;
+  case 'a':
+      angle--; break;
   case 0x1B : exit(0); }
   MyReDisplay();
 }
@@ -170,7 +182,6 @@ void Menu2(int selection)
 void spinDisplay(void)
 {
   glutPostRedisplay();
-  angle +=1 ;
 }
 
 

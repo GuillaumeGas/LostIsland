@@ -44,8 +44,9 @@ void framerate(void){
 void dessine() {
     glColor3d(1,1,1);
     glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-    glTexCoordPointer(3, GL_FLOAT, 0, h.get_point());
+    glEnableClientState(GL_COLOR_ARRAY);
+    //glTexCoordPointer(3, GL_FLOAT, 0, h.get_point());
+    glColorPointer(3, GL_FLOAT, 0, h.get_color());
     glVertexPointer ( 3, GL_FLOAT, 0, h.get_point() );
     int w = h.get_w();
     for ( int i = 0 ; i < w - 1 ; i++) { 
@@ -66,7 +67,8 @@ void display(void)
     framerate();
   glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ); //vide r√àellement la fen√çtre
   glLoadIdentity();
-
+  glColor3f(1.0,1.0,1.0);
+  gluLookAt(100,100,100,80, -10 ,80,0,1,0);
   glTranslated ( _left,up,front);
   glRotated(angle, 0,1,0);
   dessine();

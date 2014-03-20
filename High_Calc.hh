@@ -16,7 +16,7 @@ public:
 
     int * get_vertex();
     float * get_point();
-
+    float * get_color();
     int get_w();
 
     int get_size();
@@ -25,6 +25,7 @@ private:
     
     std::vector < int > height;
     float * point;
+    float * color;
     int size;
     int * vert;
     int W;

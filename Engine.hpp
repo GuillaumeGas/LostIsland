@@ -12,6 +12,7 @@
 #include <vector>
 #include "Camera.hpp"
 #include "Event.hpp"
+#include <iostream>
 
 class Engine {
   
@@ -19,9 +20,10 @@ public:
   Engine();
   ~Engine();
   
-  void init(char* titre, int w, int h);
-
-  Camera * getCamera();
+    void init(std::string titre, int w, int h);
+    void change_title(std::string);
+    
+    Camera * getCamera();
 
 
 private:

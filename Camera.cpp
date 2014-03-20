@@ -70,14 +70,8 @@ void Camera::setLookAt(position_t pos, int &i) {
 
 
 void Camera::MovePosition(Event e){
-    double realspeed = 0.2;
+    double realspeed = 1;
     if(e[SHIFT]) realspeed *= 2;
-    if(e[LEFT]) {
-	m_position -= m_left * realspeed;
-    }
-    if(e[RIGHT]) {
-	m_position += m_left * realspeed;
-    }
     if(e[UP]) {
 	m_position += m_forward * realspeed;
     }

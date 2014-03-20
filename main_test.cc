@@ -4,15 +4,29 @@
 #include "High_Calc.hh"
 #include <iostream>
 #include <math.h>
+#include <GL/glut.h>
 using namespace std;
 
 
-Img_Loader c("img.jpg");
-High_Calc h(c.get_high_map());
 
 
+void framerate(Engine & e) {
+ static int frame=0,time,timebase=0;
+  static char titre[100];
+	
+  frame++;
+  time = SDL_GetTicks();
+  if (time - timebase > 1000) {
+      sprintf(titre,"FPS:%4.2f",
+	      frame*1000.0/(time-timebase));
+      e.change_title(titre);
+      timebase = time;		
+      frame = 0;
+  }  
+}
 
-void dessine() {
+
+void dessine(High_Calc & h) {
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_COLOR_ARRAY);
     glColorPointer(3, GL_FLOAT, 0, h.get_color());
@@ -25,9 +39,11 @@ void dessine() {
 
 
 int main(int argc, char ** argv) {
+    Img_Loader c(argv[1]);
+    High_Calc h(c.get_high_map());
     Engine en;
-    int w = 1000, h = 768;
-    en.init("test", w, h);
+    int largeur = 1000, hauteur = 768;
+    en.init("test", largeur, hauteur);
     int _left = -10, up = 0, front = -50;
 en.getCamera()->setLook(100,100,100,80,-10,80,0,1,0); 
 
@@ -40,14 +56,15 @@ en.getCamera()->setLook(100,100,100,80,-10,80,0,1,0);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	if ( i >  5) {
-	    e.setMousePos(w/2, h/2);
+	    e.setMousePos(largeur/2, hauteur/2);
 	    i=0;
 	}
 	en.getCamera()->setLookAt(e(), i);
 	en.getCamera()->MovePosition(e);
 	en.getCamera()->look();
 	glTranslated(_left,up, front);
-	dessine();
+	dessine(h);
+	framerate(en);
 	SDL_GL_SwapBuffers();
 
 

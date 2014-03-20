@@ -1,4 +1,5 @@
 #include "Engine.hpp"
+using namespace std;
 
 Engine::Engine() {}
 
@@ -6,9 +7,9 @@ Engine::~Engine() {
 
 }
 
-void Engine::init(char* titre, int w, int h) {
+void Engine::init(string titre, int w, int h) {
   SDL_Init(SDL_INIT_VIDEO);
-  SDL_WM_SetCaption(titre, NULL);
+  SDL_WM_SetCaption(titre.c_str(), NULL);
   SDL_SetVideoMode(w, h, 32, SDL_OPENGL);
   SDL_WM_GrabInput(SDL_GRAB_ON);
   SDL_ShowCursor(SDL_DISABLE);
@@ -19,7 +20,9 @@ void Engine::init(char* titre, int w, int h) {
   glEnable(GL_DEPTH_TEST);
 }
 
-
+void Engine::change_title(string titre) {
+    SDL_WM_SetCaption(titre.c_str(), NULL);
+}
 
 
 Camera * Engine::getCamera() {

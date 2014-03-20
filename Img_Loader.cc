@@ -29,7 +29,7 @@ Uint32 obtenirPixel(SDL_Surface *surface, int x, int y)
 
 Img_Loader::Img_Loader(string file) {
     SDL_Surface * surf = NULL;
-    surf = SDL_LoadBMP(file.c_str());
+    surf = IMG_Load(file.c_str());
     if(!surf) {
 	cout << "Erreur !" << endl;
     } else {

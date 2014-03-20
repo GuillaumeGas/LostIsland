@@ -10,7 +10,7 @@
 
 using namespace std;
 
-Img_Loader c( "img.bmp" );
+Img_Loader c( "img.jpg" );
 High_Calc h( c.get_high_map() );
 
 int angle = 0;

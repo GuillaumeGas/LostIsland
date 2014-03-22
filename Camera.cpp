@@ -70,18 +70,21 @@ void Camera::setLookAt(position_t pos, int &i) {
 }
 
 
-void Camera::calc_high(const High_Calc & h) {
+void Camera::calc_high(const High_Calc & h, const Cube & c ) {
     m_position._Y() = h.get_high(m_position._X(), m_position._Z()) + 10.0;
+    if ( m_position._Y() <= c._y() ) {
+	m_position._Y() = c._y();
+    }
 }
 
 
-void Camera::MovePosition(Event e, const High_Calc & h){
+    void Camera::MovePosition(Event e, const High_Calc & h, const Cube &c){
     double realspeed = 2;
     if ( e[SHIFT] ) realspeed *= 2;
     if ( !e[SPACE] ) {
 	realspeed = 0.5;
 	if ( e[SHIFT] ) realspeed *= 2;
-	calc_high(h);
+	calc_high(h, c);
 	if (m_position._X() < 0 ) {
 	    m_position._X() = 0;
 	} else if ( m_position._X() >= h.get_w() * h.get_zoom_x()) {

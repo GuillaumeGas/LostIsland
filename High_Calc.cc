@@ -33,7 +33,7 @@ void High_Calc::genere_point ( ) {
 }
 
 
-int High_Calc::get_w() {
+int High_Calc::get_w() const{
     return W;
 }
 

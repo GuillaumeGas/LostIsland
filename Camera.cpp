@@ -90,6 +90,16 @@ void Camera::MovePosition(Event e, const High_Calc & h){
     }
     if ( !fly ) {
 	calc_high(h);
+	if (m_position._X() < 0 ) {
+	    m_position._X() = 0;
+	} else if ( m_position._X() >= h.get_w() ) {
+	    m_position._X() = h.get_w();
+	}
+	if ( m_position._Z() < 0) {
+	    m_position._Z() = 0;
+	} else if ( m_position._Z() >= h.get_w() ) {
+	    m_position._Z() = h.get_w();
+	}
     }
     m_target = m_position + m_forward;
 }

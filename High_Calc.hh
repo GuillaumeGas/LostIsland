@@ -19,7 +19,7 @@ public:
     int * get_vertex();
     float * get_point();
     float * get_color();
-    int get_w();
+    int get_w() const;
 
     int get_size();
     

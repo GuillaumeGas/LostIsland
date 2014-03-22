@@ -8,7 +8,7 @@ class High_Calc {
 
 public:
     
-    High_Calc ( std::vector < int > , double , double);
+    High_Calc ( std::vector < int > , double , double, double);
 
     void genere_point();
     void genere_vertex();

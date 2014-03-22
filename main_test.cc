@@ -51,7 +51,7 @@ string load_args(int argc, char ** argv) {
 int main(int argc, char ** argv) {
     string img = load_args(argc, argv);
     Img_Loader c(img.c_str());
-    High_Calc h(c.get_high_map(), 1.0, 1.0);
+    High_Calc h(c.get_high_map(), 3.0, 3.0, 3.0);
     Engine en;
     int largeur = 1000, hauteur = 768;
     en.init("test", largeur, hauteur);

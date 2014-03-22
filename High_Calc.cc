@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 
-High_Calc::High_Calc ( vector <int> v , double zoom_x, double zoom_z) {
+High_Calc::High_Calc ( vector <int> v , double zoom_x, double zoom_z, double zoom_y) {
     W = sqrt(v.size());
     vert = new int[W * 2 * W];
     point = new float[W * W * 3];
@@ -10,7 +10,7 @@ High_Calc::High_Calc ( vector <int> v , double zoom_x, double zoom_z) {
     m_zoom_x = zoom_x;
     m_zoom_z = zoom_z;
     for ( auto it : v ) {
-	height.push_back ( (it - 128) );
+	height.push_back ( (it - 128) * zoom_y);
     }
     genere_point();
     genere_vertex();

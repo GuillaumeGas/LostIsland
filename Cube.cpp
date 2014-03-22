@@ -42,7 +42,9 @@ Cube::Cube(double x,double y,double z, double h, double l, double L):m_x(x), m_y
 							  
 void Cube::display(){
     glEnableClientState(GL_VERTEX_ARRAY);
-    glColor3d(0,0.2,0.8);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); 
+    glColor4d(0,0.2,0.8, 0.2);
     glVertexPointer(3,GL_FLOAT,0,point);
     glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, devant);
     glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, derriere);
@@ -51,6 +53,7 @@ void Cube::display(){
     glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, haut);
     glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, bas);
     glDisableClientState(GL_VERTEX_ARRAY);
+    glDisable(GL_BLEND);
 }		      
 
 

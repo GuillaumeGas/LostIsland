@@ -80,8 +80,9 @@ en.getCamera()->setLook(100,100,100,80,-10,80,0,1,0);
 	en.getCamera()->look();
 
 	
-	c.display();
+
 	dessine(h);
+	c.display();
 	stringstream fps;
 	fps << framerate();
 	fps << " X : " << en.getCamera()->position()._X() << " Z :" << en.getCamera()->position()._Z() << " Y : " << en.getCamera()->position()._Y();

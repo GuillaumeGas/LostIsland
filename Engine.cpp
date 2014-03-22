@@ -22,9 +22,9 @@ void Engine::init(string titre, int w, int h) {
   GLint fogmode = GL_EXP ;
   glFogi (GL_FOG_MODE, fogmode) ;
   glFogfv(GL_FOG_COLOR, fogcolor) ;
-  glFogf(GL_FOG_DENSITY, 0.0009) ;
-  glFogf(GL_FOG_START, 1000.0) ;
-  glFogf(GL_FOG_END, 5000.0) ;
+  glFogf(GL_FOG_DENSITY, 0.0005) ;
+  glFogf(GL_FOG_START, 1.0) ;
+  glFogf(GL_FOG_END, 5.0) ;
   glEnable(GL_DEPTH_TEST);
 }
 

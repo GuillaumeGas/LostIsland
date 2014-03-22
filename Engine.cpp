@@ -17,7 +17,7 @@ void Engine::init(string titre, int w, int h) {
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
   gluPerspective(70, (double)h/w, 1, 100000);
-  glEnable(GL_FOG) ;
+  //  glEnable(GL_FOG) ;
   GLfloat fogcolor[4] = {0.5, 0.5, 0.5, 1} ;
   GLint fogmode = GL_EXP ;
   glFogi (GL_FOG_MODE, fogmode) ;
@@ -26,6 +26,9 @@ void Engine::init(string titre, int w, int h) {
   glFogf(GL_FOG_START, 1.0) ;
   glFogf(GL_FOG_END, 5.0) ;
   glEnable(GL_DEPTH_TEST);
+  glEnable(GL_LIGHTING);
+  glEnable(GL_LIGHT0);
+  glEnable(GL_COLOR_MATERIAL);
 }
 
 void Engine::change_title(string titre) {

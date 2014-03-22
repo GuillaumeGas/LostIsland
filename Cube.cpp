@@ -42,6 +42,7 @@ Cube::Cube(double x,double y,double z, double h, double l, double L):m_x(x), m_y
 							  
 void Cube::display(){
     glEnableClientState(GL_VERTEX_ARRAY);
+    glShadeModel(GL_SMOOTH);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); 
     glColor4d(0,0.2,0.8, 0.2);

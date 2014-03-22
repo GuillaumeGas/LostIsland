@@ -27,6 +27,10 @@ string framerate() {
 }
 
 
+
+
+
+
 void dessine(High_Calc & h) {
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_COLOR_ARRAY);
@@ -54,22 +58,27 @@ string load_args(int argc, char ** argv) {
 int main(int argc, char ** argv) {
     string img = load_args(argc, argv);
     Img_Loader c(img.c_str());
-    int zoom_x = 5.0, zoom_z = 5.0, zoom_y = 1.0;
+    int zoom_x = 1.0, zoom_z = 1.0, zoom_y = 1.0;
     High_Calc h(c.get_high_map(), zoom_x, zoom_z, zoom_y);
+    int LightPos[] = {h.get_w() * zoom_x,zoom_y * 128 + 100 , h.get_w() * zoom_z,1};
+    int MatSpec[] = {0,0,0,0};
     Engine en;
     int largeur = 1000, hauteur = 768;
     en.init("test", largeur, hauteur);
     int _left = -10, up = 0, front = -50;
-en.getCamera()->setLook(100,100,100,80,-10,80,0,1,0); 
+    en.getCamera()->setLook(100,100,100,80,-10,80,0,1,0); 
 
     Event e;
     int i = 0;
     while (!e[QUIT] ) {
 	i++;
 	e.UpdateEvent();
+	glMaterialiv(GL_FRONT_AND_BACK,GL_SPECULAR,MatSpec);
+	glMateriali(GL_FRONT_AND_BACK,GL_SHININESS,10); 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+
 	if ( i >  5) {
 	    e.setMousePos(largeur/2, hauteur/2);
 	    i=0;
@@ -78,7 +87,7 @@ en.getCamera()->setLook(100,100,100,80,-10,80,0,1,0);
 	en.getCamera()->setLookAt(e(), i);
 	en.getCamera()->MovePosition(e, h, c);
 	en.getCamera()->look();
-
+	glLightiv(GL_LIGHT0,GL_POSITION,LightPos);
 	
 
 	dessine(h);

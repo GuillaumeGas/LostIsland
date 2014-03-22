@@ -15,6 +15,7 @@ Camera::Camera() {
   m_posy = 0;
   m_phi = 0.0;
   m_theta = 0.0;
+  fly = false;
 }
 
 void Camera::look() {
@@ -69,7 +70,12 @@ void Camera::setLookAt(position_t pos, int &i) {
 }
 
 
-void Camera::MovePosition(Event e){
+void Camera::calc_high(const High_Calc & h) {
+    m_position._Y() = h.get_high(m_position._X(), m_position._Z()) + 10.0;
+}
+
+
+void Camera::MovePosition(Event e, const High_Calc & h){
     double realspeed = 1;
     if(e[SHIFT]) realspeed *= 2;
     if(e[UP]) {
@@ -78,6 +84,17 @@ void Camera::MovePosition(Event e){
     if(e[DOWN]) {
 	m_position -= m_forward * realspeed;
     }
-
+    if ( e[SPACE] ) {
+	fly = !fly;
+	e[SPACE] = 0;
+    }
+    if ( !fly ) {
+	calc_high(h);
+    }
     m_target = m_position + m_forward;
+}
+
+
+Vector3D & Camera::position() {
+    return m_position;
 }

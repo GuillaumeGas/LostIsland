@@ -7,6 +7,7 @@
 */
 
 #include "Event.hpp"
+#include "High_Calc.hh"
 #include "Vector3d.h"
 
 class Camera {
@@ -19,9 +20,15 @@ public:
     //void setLookAt(double x, double y, double z);
     void setLookAt(position_t pos, int &);
     void setLook(double eyeX, double eyeY, double eyeZ, double centerX, double centerY, double centerZ, double upX, double upY, double upZ);
-    void MovePosition(Event e);
+    void MovePosition(Event e, const High_Calc & h);
+
+    Vector3D & position();
 
 private:
+
+    void calc_high(const High_Calc & h);
+
+
     double m_eyeX, m_eyeY, m_eyeZ;
     double m_centerX, m_centerY, m_centerZ;
     double m_upX, m_upY, m_upZ;
@@ -37,6 +44,7 @@ private:
     Vector3D m_target;
     Vector3D m_forward;
     Vector3D m_left;
+    bool fly;
 };
 
 #endif

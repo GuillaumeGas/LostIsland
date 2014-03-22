@@ -12,7 +12,7 @@ struct Input{
 
 
 enum Mapp{
-    LEFT, RIGHT, UP, DOWN,SHIFT,  QUIT , MAP_INTER, LEFT_CL , RIGHT_CL,  MAP_LAST
+    LEFT, RIGHT, UP, DOWN,SHIFT, SPACE,  QUIT , MAP_INTER, LEFT_CL , RIGHT_CL,  MAP_LAST
 };
 
 struct position_t{

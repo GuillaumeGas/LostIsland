@@ -50,6 +50,12 @@ void High_Calc::genere_vertex ( ) {
 }
 
 
+double  High_Calc::get_high(const double  & x, const double & y) const{
+    int x_ = x;
+    int y_ = y;
+    return (double)height[x_ * W + y_];
+}
+
 int * High_Calc::get_vertex ( ) {
     return vert;
 }

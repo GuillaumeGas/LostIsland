@@ -14,6 +14,8 @@ public:
     void genere_vertex();
     
 
+    double get_high(const double & , const double &)const;
+
     int * get_vertex();
     float * get_point();
     float * get_color();

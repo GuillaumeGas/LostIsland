@@ -123,3 +123,14 @@ Vector3D & Vector3D::normalize()
 }
 
 
+double & Vector3D::_Z() {
+    return Z;
+}
+
+double & Vector3D::_X() {
+    return X;
+}
+
+double & Vector3D::_Y() {
+    return Y;
+}

@@ -5,24 +5,24 @@
 #include <iostream>
 #include <math.h>
 #include <GL/glut.h>
+#include <sstream>
 using namespace std;
 
 
 
 
-void framerate(Engine & e) {
+string framerate() {
  static int frame=0,time,timebase=0;
   static char titre[100];
 	
   frame++;
   time = SDL_GetTicks();
   if (time - timebase > 1000) {
-      sprintf(titre,"FPS:%4.2f",
-	      frame*1000.0/(time-timebase));
-      e.change_title(titre);
+      sprintf(titre,"FPS:%4.2f",frame*1000.0/(time-timebase));
       timebase = time;		
       frame = 0;
-  }  
+  }
+  return string(titre);
 }
 
 
@@ -60,11 +60,14 @@ en.getCamera()->setLook(100,100,100,80,-10,80,0,1,0);
 	    i=0;
 	}
 	en.getCamera()->setLookAt(e(), i);
-	en.getCamera()->MovePosition(e);
+	en.getCamera()->MovePosition(e, h);
 	en.getCamera()->look();
-	glTranslated(_left,up, front);
+	
 	dessine(h);
-	framerate(en);
+	stringstream fps;
+	fps << framerate();
+	fps << " X : " << en.getCamera()->position()._X() << " Z :" << en.getCamera()->position()._Z() << " Y : " << en.getCamera()->position()._Y();
+	en.change_title(fps.str().c_str());
 	SDL_GL_SwapBuffers();
 
 

@@ -76,15 +76,11 @@ void Camera::calc_high(const High_Calc & h) {
 
 
 void Camera::MovePosition(Event e, const High_Calc & h){
-    double realspeed = 1;
-    if(e[SHIFT]) realspeed *= 2;
-    if(e[UP]) {
-	m_position += m_forward * realspeed;
-    }
-    if(e[DOWN]) {
-	m_position -= m_forward * realspeed;
-    }
+    double realspeed = 2;
+    if ( e[SHIFT] ) realspeed *= 2;
     if ( !e[SPACE] ) {
+	realspeed = 0.5;
+	if ( e[SHIFT] ) realspeed *= 2;
 	calc_high(h);
 	if (m_position._X() < 0 ) {
 	    m_position._X() = 0;
@@ -96,6 +92,12 @@ void Camera::MovePosition(Event e, const High_Calc & h){
 	} else if ( m_position._Z() >= h.get_w() * h.get_zoom_z() ) {
 	    m_position._Z() = h.get_w() * h.get_zoom_z();
 	}
+    }
+    if(e[UP]) {
+	m_position += m_forward * realspeed;
+    }
+    if(e[DOWN]) {
+	m_position -= m_forward * realspeed;
     }
     m_target = m_position + m_forward;
 }

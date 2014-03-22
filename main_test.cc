@@ -38,9 +38,20 @@ void dessine(High_Calc & h) {
 }
 
 
+
+string load_args(int argc, char ** argv) {
+    if ( argc != 1 ) {
+	return argv[1];
+    } else {
+	return "IMG/sauv1.jpg";
+    }
+}
+
+
 int main(int argc, char ** argv) {
-    Img_Loader c(argv[1]);
-    High_Calc h(c.get_high_map(), 3.0, 3.0);
+    string img = load_args(argc, argv);
+    Img_Loader c(img.c_str());
+    High_Calc h(c.get_high_map(), 1.0, 1.0);
     Engine en;
     int largeur = 1000, hauteur = 768;
     en.init("test", largeur, hauteur);
@@ -62,7 +73,6 @@ en.getCamera()->setLook(100,100,100,80,-10,80,0,1,0);
 	en.getCamera()->setLookAt(e(), i);
 	en.getCamera()->MovePosition(e, h);
 	en.getCamera()->look();
-	
 	dessine(h);
 	stringstream fps;
 	fps << framerate();

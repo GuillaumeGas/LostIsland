@@ -22,9 +22,9 @@ void High_Calc::genere_point ( ) {
     int d = 0;
     for ( int j = 0 ; j < W ; j++ ) {
 	for ( int i = 0 ; i < W ; i ++ ) {
-	    color [ d ] = (height[i + j * W] + 128) / 128.0;  
-	    color [ d + 1 ] = (height[i + j * W] + 128) / 128.0;  
-	    color [ d + 2 ] = (height[i + j * W] + 128) / 128.0;  
+	    color [ d ] = 0;  
+	    color [ d + 1 ] = (height[i + j * W] + 128) / 255.0;  
+	    color [ d + 2 ] = (height[i + j * W] + 128) / 1000.0;  
 	    point [ c ] = j * m_zoom_x;
 	    point [ c + 2 ] = i * m_zoom_z;
 	    point [ c + 1 ] = height[i + j * W];

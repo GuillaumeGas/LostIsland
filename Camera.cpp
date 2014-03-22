@@ -84,21 +84,17 @@ void Camera::MovePosition(Event e, const High_Calc & h){
     if(e[DOWN]) {
 	m_position -= m_forward * realspeed;
     }
-    if ( e[SPACE] ) {
-	fly = !fly;
-	e[SPACE] = 0;
-    }
-    if ( !fly ) {
+    if ( !e[SPACE] ) {
 	calc_high(h);
 	if (m_position._X() < 0 ) {
 	    m_position._X() = 0;
-	} else if ( m_position._X() >= h.get_w() ) {
-	    m_position._X() = h.get_w();
+	} else if ( m_position._X() >= h.get_w() * h.get_zoom_x()) {
+	    m_position._X() = h.get_w() * h.get_zoom_x();
 	}
 	if ( m_position._Z() < 0) {
 	    m_position._Z() = 0;
-	} else if ( m_position._Z() >= h.get_w() ) {
-	    m_position._Z() = h.get_w();
+	} else if ( m_position._Z() >= h.get_w() * h.get_zoom_z() ) {
+	    m_position._Z() = h.get_w() * h.get_zoom_z();
 	}
     }
     m_target = m_position + m_forward;

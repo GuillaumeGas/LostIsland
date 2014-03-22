@@ -40,7 +40,7 @@ void dessine(High_Calc & h) {
 
 int main(int argc, char ** argv) {
     Img_Loader c(argv[1]);
-    High_Calc h(c.get_high_map());
+    High_Calc h(c.get_high_map(), 3.0, 3.0);
     Engine en;
     int largeur = 1000, hauteur = 768;
     en.init("test", largeur, hauteur);

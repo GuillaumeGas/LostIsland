@@ -2,11 +2,13 @@
 #include <iostream>
 using namespace std;
 
-High_Calc::High_Calc ( vector <int> v ) {
+High_Calc::High_Calc ( vector <int> v , double zoom_x, double zoom_z) {
     W = sqrt(v.size());
     vert = new int[W * 2 * W];
     point = new float[W * W * 3];
     color = new float[W * W * 3];
+    m_zoom_x = zoom_x;
+    m_zoom_z = zoom_z;
     for ( auto it : v ) {
 	height.push_back ( (it - 128) );
     }
@@ -23,8 +25,8 @@ void High_Calc::genere_point ( ) {
 	    color [ d ] = (height[i + j * W] + 128) / 128.0;  
 	    color [ d + 1 ] = (height[i + j * W] + 128) / 128.0;  
 	    color [ d + 2 ] = (height[i + j * W] + 128) / 128.0;  
-	    point [ c ] = j;
-	    point [ c + 2 ] = i;
+	    point [ c ] = j * m_zoom_x;
+	    point [ c + 2 ] = i * m_zoom_z;
 	    point [ c + 1 ] = height[i + j * W];
 	    c += 3;
 	    d+= 3;
@@ -50,10 +52,10 @@ void High_Calc::genere_vertex ( ) {
 }
 
 
-double  High_Calc::get_high(const double  & x, const double & y) const{
-    int x_ = x;
-    int y_ = y;
-    return (double)height[x_ * W + y_];
+double  High_Calc::get_high(const double  & x, const double & z) const{
+    double x_ = x / m_zoom_x;
+    double z_ = z / m_zoom_z;
+    return (double)height[(int)x_ * W + (int)z_];
 }
 
 int * High_Calc::get_vertex ( ) {
@@ -72,4 +74,14 @@ float * High_Calc::get_color() {
 
 int High_Calc::get_size ( ) {
     return size;
+}
+
+
+
+double High_Calc::get_zoom_z() const {
+    return m_zoom_z;
+}
+
+double High_Calc::get_zoom_x() const {
+    return m_zoom_x;
 }

@@ -8,7 +8,7 @@ class High_Calc {
 
 public:
     
-    High_Calc ( std::vector < int > );
+    High_Calc ( std::vector < int > , double , double);
 
     void genere_point();
     void genere_vertex();
@@ -20,11 +20,13 @@ public:
     float * get_point();
     float * get_color();
     int get_w() const;
+    double get_zoom_z()const;
+    double get_zoom_x() const;
 
     int get_size();
     
 private:
-    
+    double m_zoom_x, m_zoom_z;
     std::vector < int > height;
     float * point;
     float * color;

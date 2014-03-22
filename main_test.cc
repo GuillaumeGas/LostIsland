@@ -54,7 +54,7 @@ string load_args(int argc, char ** argv) {
 int main(int argc, char ** argv) {
     string img = load_args(argc, argv);
     Img_Loader c(img.c_str());
-    int zoom_x = 3.0, zoom_z = 3.0, zoom_y = 2.0;
+    int zoom_x = 5.0, zoom_z = 5.0, zoom_y = 1.0;
     High_Calc h(c.get_high_map(), zoom_x, zoom_z, zoom_y);
     Engine en;
     int largeur = 1000, hauteur = 768;
@@ -74,7 +74,7 @@ en.getCamera()->setLook(100,100,100,80,-10,80,0,1,0);
 	    e.setMousePos(largeur/2, hauteur/2);
 	    i=0;
 	}
-	Cube c(0,e.WheelChange() - 128* zoom_y ,0, 128*zoom_y,h.get_w() * h.get_zoom_x(), h.get_w() * h.get_zoom_z());
+	Cube c(0,e.WheelChange() * zoom_y,0,0 ,h.get_w() * h.get_zoom_x(), h.get_w() * h.get_zoom_z());
 	en.getCamera()->setLookAt(e(), i);
 	en.getCamera()->MovePosition(e, h, c);
 	en.getCamera()->look();

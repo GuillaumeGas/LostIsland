@@ -73,13 +73,13 @@ void Camera::setLookAt(position_t pos, int &i) {
 void Camera::calc_high(const High_Calc & h, const Cube & c ) {
     m_position._Y() = h.get_high(m_position._X(), m_position._Z()) + 10.0;
     if ( m_position._Y() <= c._y() ) {
-	m_position._Y() = c._y();
+	m_position._Y() = c._y() + 1;
     }
 }
 
 
     void Camera::MovePosition(Event e, const High_Calc & h, const Cube &c){
-    double realspeed = 2;
+    double realspeed = 4;
     if ( e[SHIFT] ) realspeed *= 2;
     if ( !e[SPACE] ) {
 	realspeed = 0.5;

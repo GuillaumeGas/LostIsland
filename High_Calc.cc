@@ -9,6 +9,7 @@ High_Calc::High_Calc ( vector <int> v , double zoom_x, double zoom_z, double zoo
     color = new float[W * W * 3];
     m_zoom_x = zoom_x;
     m_zoom_z = zoom_z;
+    m_zoom_y = zoom_y;
     for ( auto it : v ) {
 	height.push_back ( (it - 128) * zoom_y);
     }
@@ -20,11 +21,32 @@ High_Calc::High_Calc ( vector <int> v , double zoom_x, double zoom_z, double zoo
 void High_Calc::genere_point ( ) {
     int c = 0;
     int d = 0;
+    cout << m_zoom_y << endl;
     for ( int j = 0 ; j < W ; j++ ) {
 	for ( int i = 0 ; i < W ; i ++ ) {
-	    color [ d ] = 0;  
-	    color [ d + 1 ] = (height[i + j * W] + 128) / 255.0;  
-	    color [ d + 2 ] = (height[i + j * W] + 128) / 1000.0;  
+	    int a = rand()%5/10.0;
+	    if ( height[i + j * W] >= (90 * m_zoom_y)) {
+		color[d] = 1 - a;
+		color[d+1] = 1 - a;
+		color[d+2] = 1 - a;
+	    } else if ( height[i + j * W] >= (30*m_zoom_y)) {
+		color[d] = 24/255.0 + a;
+		color[d+1] = 99/255.0 + a;
+		color[d+2] = 5/255.0 + a;
+	    } else if ( height[i + j * W] >= (10*m_zoom_y) ) {
+		color[d] = 99/255.0 + a;
+		color[d+1] = 60/255.0 + a;
+		color[d+2] = 5/255.0 + a;
+	    } else if ( height[i + j * W] >= (-10 * m_zoom_y) ) {
+		color[d] = 234/255.0 + a;
+		color[d+1] = 211/255.0 + a;
+		color[d+2] = 82/255.0 + a;
+	    } else {
+		color[d] = 112/255.0 + a;
+		color[d+1] = 111/255.0 + a;
+		color[d+2] = 108/255.0 + a;
+	    }
+	    
 	    point [ c ] = j * m_zoom_x;
 	    point [ c + 2 ] = i * m_zoom_z;
 	    point [ c + 1 ] = height[i + j * W];

@@ -26,7 +26,7 @@ public:
     int get_size();
     
 private:
-    double m_zoom_x, m_zoom_z;
+    double m_zoom_x, m_zoom_z, m_zoom_y;
     std::vector < int > height;
     float * point;
     float * color;

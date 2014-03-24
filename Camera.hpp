@@ -24,6 +24,7 @@ public:
     void MovePosition(Event e, const High_Calc & h, const Cube & c);
 
     Vector3D & position();
+    Vector3D target();
 
 private:
 

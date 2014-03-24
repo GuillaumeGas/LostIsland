@@ -109,3 +109,8 @@ void Camera::calc_high(const High_Calc & h, const Cube & c ) {
 Vector3D & Camera::position() {
     return m_position;
 }
+
+
+Vector3D  Camera::target() {
+    return m_target;
+}

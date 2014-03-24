@@ -58,7 +58,7 @@ string load_args(int argc, char ** argv) {
 int main(int argc, char ** argv) {
     string img = load_args(argc, argv);
     Img_Loader c(img.c_str());
-    int zoom_x = 1.0, zoom_z = 1.0, zoom_y = 1.0;
+    int zoom_x = 10.0, zoom_z = 10.0, zoom_y = 1.0;
     High_Calc h(c.get_high_map(), zoom_x, zoom_z, zoom_y);
     int LightPos[] = {h.get_w() * zoom_x,zoom_y * 128 + 100 , h.get_w() * zoom_z,1};
     int MatSpec[] = {0,0,0,0};
@@ -88,8 +88,7 @@ int main(int argc, char ** argv) {
 	en.getCamera()->MovePosition(e, h, c);
 	en.getCamera()->look();
 	glLightiv(GL_LIGHT0,GL_POSITION,LightPos);
-	
-
+	double x = en.getCamera()->target()._X(), y = en.getCamera()->target()._Y(), z = en.getCamera()->target()._Z();
 	dessine(h);
 	c.display();
 	stringstream fps;

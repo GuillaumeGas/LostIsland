@@ -6,7 +6,9 @@
 #include <math.h>
 #include <GL/glut.h>
 #include <sstream>
+#include <vector>
 #include "Cube.hpp"
+#include "Tree.hpp"
 using namespace std;
 
 
@@ -68,6 +70,13 @@ int main(int argc, char ** argv) {
     int _left = -10, up = 0, front = -50;
     en.getCamera()->setLook(100,100,100,80,-10,80,0,1,0); 
 
+    vector<Tree> vec_tree;
+    double x = 100.0;
+    for(int i = 0; i < 10; i++) {
+	vec_tree.push_back(Tree(x, 100.0, 100.0, 100.0, 0.6, 0.6, zoom_x, zoom_y, zoom_z));
+	x+=10;
+    }
+    
     Event e;
     int i = 0;
     while (!e[QUIT] ) {
@@ -91,6 +100,11 @@ int main(int argc, char ** argv) {
 	double x = en.getCamera()->target()._X(), y = en.getCamera()->target()._Y(), z = en.getCamera()->target()._Z();
 	dessine(h);
 	c.display();
+	
+	for(auto it : vec_tree) {
+	    it.display();
+	}
+
 	stringstream fps;
 	fps << framerate();
 	fps << " X : " << en.getCamera()->position()._X() << " Z :" << en.getCamera()->position()._Z() << " Y : " << en.getCamera()->position()._Y();

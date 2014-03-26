@@ -97,9 +97,9 @@ int main(int argc, char ** argv) {
     srand(time(NULL));
     string img = load_args(argc, argv);
     Img_Loader c(img.c_str());
-    int zoom_x = 6.0, zoom_z = 5.0, zoom_y = 1.5;
+    int zoom_x = 10.0, zoom_z = 10.0, zoom_y = 1.0;
     High_Calc h(c.get_high_map(), zoom_x, zoom_z, zoom_y);
-    int LightPos[] = {h.get_w() * zoom_x,zoom_y * 128 + 100 , h.get_w() * zoom_z,1};
+
     int MatSpec[] = {0,0,0,0};
     Engine en;
     int largeur = 1000, hauteur = 768;
@@ -108,12 +108,12 @@ int main(int argc, char ** argv) {
     en.getCamera()->setLook(0,100,100,80,-10,80,0,1,0); 
 
     vector <float> position;
-    for ( int i = 0 ; i < 100 * 3 ; i+=3 ) {
+    for ( int i = 0 ; i < 1 * 3 ; i+=3 ) {
 	double x, y, z;
 	do {
 	    x = (double)(rand()%h.get_w()*zoom_x+1);
 	    z = (double)(rand()%h.get_w()*zoom_z+1);
-	    y = h.get_high(x, z)+5;
+	    y = h.get_high(x, z) + 5;
 	} while(y <= 10 || y >= 90);
 	position.push_back(x);
 	position.push_back(y);
@@ -128,7 +128,7 @@ int main(int argc, char ** argv) {
 	do {
 	    x = (double)(rand()%h.get_w() + 1);
 	    z = (double)(rand()%h.get_w() + 1);
-	    y = h.get_high(x*zoom_x, z* zoom_z);
+	    y = h.get_high(x * zoom_x, z * zoom_z) - 5;
 	    he = (double)(rand()%150+50);
 	} while(y <= 10 || y >= 90);
 	vec_tree.push_back(Tree(x, y, z, he, 0.6, 0.6, zoom_x, zoom_y, zoom_z));
@@ -140,6 +140,8 @@ int main(int argc, char ** argv) {
     int i = 0;
     GLfloat dif[] = {0.0,0.0,0.0,1.0};
     bool retour = false;
+    int LightPos[] = {0,100 , 0,1};
+    bool retour_lum = false;
     while (!e[QUIT] ) {
 	i++;
 	e.UpdateEvent();
@@ -167,13 +169,16 @@ int main(int argc, char ** argv) {
 	    glLoadIdentity();
 	    
 	}
+
 	Cube c(0,e.WheelChange() * zoom_y,0,0 ,h.get_w() * h.get_zoom_x(), h.get_w() * h.get_zoom_z());
+	Cube c2(LightPos[0], LightPos[1], LightPos[2], 10,10,10);
 	en.getCamera()->setLookAt(e(), i);
 	en.getCamera()->MovePosition(e, h, c);
 	en.getCamera()->look();
 
-	glLightfv(GL_LIGHT0,GL_DIFFUSE,dif); 
 	glLightiv(GL_LIGHT0,GL_POSITION,LightPos);
+	glLightfv(GL_LIGHT0,GL_DIFFUSE,dif); 
+
 	double x = en.getCamera()->target()._X(), y = en.getCamera()->target()._Y(), z = en.getCamera()->target()._Z();
 
 	
@@ -191,6 +196,27 @@ int main(int argc, char ** argv) {
 	    obsf.display();
 	}
 	
+
+
+	if ( retour_lum ) {
+	    if ( LightPos[0] > 0 ) {
+		LightPos[0] -= 100;
+		LightPos[2]-= 100; 
+	    } else {
+		retour_lum = false;
+	    }
+	} else {
+	    if ( LightPos[0] < h.get_w() * zoom_x ) {
+		LightPos[0] += 100;
+		LightPos[2] += 100;
+	    } else {
+		retour_lum = true;
+	    }
+	}
+
+
+
+
 	if ( retour ) {
 	    if ( dif[1] > 0.0f ){
 		dif[1] -= 0.05f;
@@ -210,6 +236,7 @@ int main(int argc, char ** argv) {
 	    }
 	}
 	c.display();
+	c2.display();
 	stringstream fps;
 	fps << framerate();
 	fps << " X : " << en.getCamera()->position()._X() << " Z :" << en.getCamera()->position()._Z() << " Y : " << en.getCamera()->position()._Y();

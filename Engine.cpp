@@ -10,14 +10,14 @@ Engine::~Engine() {
 void Engine::init(string titre, int w, int h) {
   SDL_Init(SDL_INIT_VIDEO);
   SDL_WM_SetCaption(titre.c_str(), NULL);
-  SDL_SetVideoMode(w, h, 32, SDL_OPENGL);
+  ecran = SDL_SetVideoMode(w, h, 32, SDL_OPENGL);
   SDL_WM_GrabInput(SDL_GRAB_ON);
   SDL_ShowCursor(SDL_DISABLE);
   glClearColor( 0.5,0.5,0.5,1.0);
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
   gluPerspective(70, (double)h/w, 1, 100000);
-  glEnable(GL_FOG) ;
+  //glEnable(GL_FOG) ;
   GLfloat fogcolor[4] = {0.5, 0.5, 0.5, 1} ;
   GLint fogmode = GL_EXP ;
   glFogi (GL_FOG_MODE, fogmode) ;
@@ -42,4 +42,9 @@ void Engine::change_title(string titre) {
 
 Camera * Engine::getCamera() {
   return &m_cam;
+}
+
+
+SDL_Surface * Engine::get_ecran() {
+    return ecran;
 }

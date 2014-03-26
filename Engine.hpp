@@ -24,11 +24,12 @@ public:
     void change_title(std::string);
     
     Camera * getCamera();
-
+    SDL_Surface * get_ecran();
 
 private:
-  SDL_Event m_event;
-  Camera m_cam;
+    SDL_Event m_event;
+    SDL_Surface * ecran;
+    Camera m_cam;
 };
 
 #endif

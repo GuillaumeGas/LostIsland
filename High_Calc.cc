@@ -7,6 +7,7 @@ High_Calc::High_Calc ( vector <int> v , double zoom_x, double zoom_z, double zoo
     vert = new int[W * 2 * W];
     point = new float[W * W * 3];
     color = new float[W * W * 3];
+
     m_zoom_x = zoom_x;
     m_zoom_z = zoom_z;
     m_zoom_y = zoom_y;

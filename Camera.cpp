@@ -79,7 +79,7 @@ void Camera::calc_high(const High_Calc & h, const Cube & c ) {
 
 
     void Camera::MovePosition(Event e, const High_Calc & h, const Cube &c){
-    double realspeed = 4;
+    double realspeed = 50;
     if ( e[SHIFT] ) realspeed *= 2;
     if ( !e[SPACE] ) {
 	realspeed = 0.5;

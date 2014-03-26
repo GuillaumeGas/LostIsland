@@ -21,6 +21,21 @@ ObjectOff::ObjectOff(const string file) {
     load(file.c_str());
 }
 
+
+ObjectOff::ObjectOff(vector<float> &somm, vector<int> &index) {
+    myindex = new GLuint[index.size()];
+    for ( int i = 0 ; i < index.size() ; i++ ) {
+	myindex[i] = index[i];
+    }
+    sommets = new float[somm.size()];
+    for ( int i = 0 ; i < somm.size() ; i++ ) {
+	sommets[i] = somm[i];
+    }
+}
+
+
+
+
 void ObjectOff::load(const char * file) {
     ifstream f(file, ios::in);
     string ch;
@@ -52,17 +67,23 @@ void ObjectOff::load(const char * file) {
     f.close();
 }
 
+
+
 void ObjectOff::display() {
     glTranslated(m_x, m_y, m_z);
+    cout << m_x << " " << m_y << " " << m_z << endl;
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
     glTexCoordPointer(3, GL_FLOAT, 0, sommets);
     glVertexPointer(3, GL_FLOAT, 0, sommets);
     glDrawElements(GL_TRIANGLES, nbIndex*3, GL_UNSIGNED_INT, myindex);
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
     glLoadIdentity();
 }
 
-void ObjectOff::set_pos(const double x, const double y, const double z) {
+void ObjectOff::set_pos(const double &x, const double &y, const double &z) {
+
     m_x = x;
     m_y = y;
     m_z = z;

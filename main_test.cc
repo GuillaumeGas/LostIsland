@@ -10,10 +10,9 @@
 #include <cstdlib>
 #include "Cube.hpp"
 #include "Tree.hpp"
+#include "ObjectOff.hpp"
+
 using namespace std;
-
-
-
 
 string framerate() {
  static int frame=0,time,timebase=0;
@@ -31,6 +30,42 @@ string framerate() {
 
 
 
+
+void load(vector<float> &somm, vector<int> & ind, const char * file ) {
+   ifstream f(file, ios::in);
+    string ch;
+    int aux;
+    int nbSommets, nbIndex;
+    
+    f >> ch >> nbSommets >> nbIndex >> aux;
+
+    if(ch == "OFF") {
+	int j = 0;
+	for(int i = 0; i < nbSommets; i++) {
+	    float a,b,c;
+	    f >> a >> b >> c;
+	    somm.push_back(a);
+	    somm.push_back(b);
+	    somm.push_back(c);
+	}
+	
+	int nb;
+	f >> nb;
+	j = 0;
+	for(int i = 0; i < nbIndex; i++) {
+	    for(int k = 0; k < nb; k++) {
+		int a;
+		f >> a;
+		ind.push_back(a);
+	    }
+	    f >> nb;
+	}
+    } else {
+	cout << "Erreur, fichier inconnu." << endl;
+	throw -1;
+    }
+    f.close();
+}
 
 
 
@@ -72,6 +107,23 @@ int main(int argc, char ** argv) {
     int _left = -10, up = 0, front = -50;
     en.getCamera()->setLook(100,100,100,80,-10,80,0,1,0); 
 
+    vector<float> somm;
+    vector<int> ind;
+    load(somm, ind, "maillages/triceratops.off");
+
+    vector<ObjectOff> pos_vector;
+    for ( int i = 0 ; i < 400 * 3 ; i+=3 ) {
+	   double x, y, z;
+	    do {
+		x = (double)(rand()%h.get_w()+1);
+		z = (double)(rand()%h.get_w()+1);
+		y = h.get_high(x*zoom_x, z*zoom_z);
+	    } while(y <= 10 || y >= 90);
+	    pos_vector.push_back(ObjectOff(somm, ind));
+	    pos_vector[pos_vector.size()-1].set_pos(x, y, z); 
+    }
+
+
     vector<Tree> vec_tree;
     for(int i = 0; i < 400; i++) {
 	double x, y, z, he, wi;
@@ -84,6 +136,8 @@ int main(int argc, char ** argv) {
 	vec_tree.push_back(Tree(x, y, z, he, 0.6, 0.6, zoom_x, zoom_y, zoom_z));
     }
     
+    ObjectOff obsf("maillages/triceratops.off");
+
     Event e;
     int i = 0;
     while (!e[QUIT] ) {
@@ -105,10 +159,15 @@ int main(int argc, char ** argv) {
 	en.getCamera()->look();
 	glLightiv(GL_LIGHT0,GL_POSITION,LightPos);
 	double x = en.getCamera()->target()._X(), y = en.getCamera()->target()._Y(), z = en.getCamera()->target()._Z();
+
 	dessine(h);
 	c.display();
 	
 	for(auto it : vec_tree) {
+	    it.display();
+	}
+
+	for ( auto it : pos_vector ) {
 	    it.display();
 	}
 

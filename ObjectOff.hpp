@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <GL/glut.h>
+#include <vector>
 
 /* Classe permettant de charger un objet depuis un fichier .off et de l'afficher */
 
@@ -11,10 +12,10 @@ class ObjectOff {
 public:
     ObjectOff(const char *);
     ObjectOff(const std::string);
-
+    ObjectOff(std::vector<float>&, std::vector<int>&);
     void display();
-    void set_pos(const double x, const double y, const double z);
-
+    void set_pos(const double &x, const double &y, const double &z);
+    
 private:
     void load(const char *);
 

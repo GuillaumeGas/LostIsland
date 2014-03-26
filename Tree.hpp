@@ -2,7 +2,7 @@
 #define _TREE
 
 #include <vector>
-#include "Branch.hpp"
+#include "Cube.hpp"
 
 class Tree {
 public:
@@ -10,8 +10,9 @@ public:
     void display();
 
 private:
-    Branch tronc;
-    std::vector<Branch> branches;
+    Cube tronc;
+    std::vector<Cube> branches;
+    std::vector<Cube> leaves;
 };
 
 #endif

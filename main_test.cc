@@ -7,6 +7,7 @@
 #include <GL/glut.h>
 #include <sstream>
 #include <vector>
+#include <cstdlib>
 #include "Cube.hpp"
 #include "Tree.hpp"
 using namespace std;
@@ -58,6 +59,7 @@ string load_args(int argc, char ** argv) {
 
 
 int main(int argc, char ** argv) {
+    srand(time(NULL));
     string img = load_args(argc, argv);
     Img_Loader c(img.c_str());
     int zoom_x = 10.0, zoom_z = 10.0, zoom_y = 1.0;
@@ -71,10 +73,15 @@ int main(int argc, char ** argv) {
     en.getCamera()->setLook(100,100,100,80,-10,80,0,1,0); 
 
     vector<Tree> vec_tree;
-    double x = 100.0;
-    for(int i = 0; i < 10; i++) {
-	vec_tree.push_back(Tree(x, 100.0, 100.0, 100.0, 0.6, 0.6, zoom_x, zoom_y, zoom_z));
-	x+=10;
+    for(int i = 0; i < 400; i++) {
+	double x, y, z, he, wi;
+	do {
+	    x = (double)(rand()%largeur+1);
+	    z = (double)(rand()%largeur+1);
+	    y = h.get_high(x*zoom_x, z*zoom_z);
+	    he = (double)(rand()%150+50);
+	} while(y <= 10 || y >= 90);
+	vec_tree.push_back(Tree(x, y, z, he, 0.6, 0.6, zoom_x, zoom_y, zoom_z));
     }
     
     Event e;

@@ -97,7 +97,7 @@ int main(int argc, char ** argv) {
     srand(time(NULL));
     string img = load_args(argc, argv);
     Img_Loader c(img.c_str());
-    int zoom_x = 10.0, zoom_z = 10.0, zoom_y = 1.0;
+    int zoom_x = 10.0, zoom_z = 10.0, zoom_y = 1.5;
     High_Calc h(c.get_high_map(), zoom_x, zoom_z, zoom_y);
     int LightPos[] = {h.get_w() * zoom_x,zoom_y * 128 + 100 , h.get_w() * zoom_z,1};
     int MatSpec[] = {0,0,0,0};
@@ -105,22 +105,13 @@ int main(int argc, char ** argv) {
     int largeur = 1000, hauteur = 768;
     en.init("test", largeur, hauteur);
     int _left = -10, up = 0, front = -50;
-    en.getCamera()->setLook(100,100,100,80,-10,80,0,1,0); 
+    en.getCamera()->setLook(0,100,100,80,-10,80,0,1,0); 
 
-    vector<float> somm;
-    vector<int> ind;
-    load(somm, ind, "maillages/triceratops.off");
-
-    vector<ObjectOff> pos_vector;
-    for ( int i = 0 ; i < 400 * 3 ; i+=3 ) {
-	   double x, y, z;
-	    do {
-		x = (double)(rand()%h.get_w()+1);
-		z = (double)(rand()%h.get_w()+1);
-		y = h.get_high(x*zoom_x, z*zoom_z);
-	    } while(y <= 10 || y >= 90);
-	    pos_vector.push_back(ObjectOff(somm, ind));
-	    pos_vector[pos_vector.size()-1].set_pos(x, y, z); 
+    vector <float> position;
+    for ( int i = 0 ; i < 60 * 3 ; i+=3 ) {
+	position.push_back(i*100 + 100);
+	position.push_back(30);
+	position.push_back(i*100 + 100);
     }
 
 
@@ -167,8 +158,9 @@ int main(int argc, char ** argv) {
 	    it.display();
 	}
 
-	for ( auto it : pos_vector ) {
-	    it.display();
+	for ( int i = 0 ; i < position.size() ; i+=3 ) {
+	    obsf.set_pos(position[i], position[i+1], position[i+2]);
+	    obsf.display();
 	}
 
 	stringstream fps;

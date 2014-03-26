@@ -109,9 +109,16 @@ int main(int argc, char ** argv) {
 
     vector <float> position;
     for ( int i = 0 ; i < 60 * 3 ; i+=3 ) {
-	position.push_back(i*100 + 100);
-	position.push_back(30);
-	position.push_back(i*100 + 100);
+	double x, y, z;
+	do {
+	    x = (double)(rand()%h.get_w()*zoom_x+1);
+	    z = (double)(rand()%h.get_w()*zoom_z+1);
+	    y = h.get_high(x, z)+5;
+	} while(y <= 10 || y >= 90);
+	position.push_back(x);
+	position.push_back(y);
+	position.push_back(z);
+
     }
 
 
@@ -159,7 +166,9 @@ int main(int argc, char ** argv) {
 	}
 
 	for ( int i = 0 ; i < position.size() ; i+=3 ) {
+
 	    obsf.set_pos(position[i], position[i+1], position[i+2]);
+
 	    obsf.display();
 	}
 

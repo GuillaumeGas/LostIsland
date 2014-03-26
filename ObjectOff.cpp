@@ -70,16 +70,18 @@ void ObjectOff::load(const char * file) {
 
 
 void ObjectOff::display() {
+
+    glPushMatrix();
     glTranslated(m_x, m_y, m_z);
-    cout << m_x << " " << m_y << " " << m_z << endl;
+
     glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-    glTexCoordPointer(3, GL_FLOAT, 0, sommets);
+    //    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    //glTexCoordPointer(3, GL_FLOAT, 0, sommets);
     glVertexPointer(3, GL_FLOAT, 0, sommets);
     glDrawElements(GL_TRIANGLES, nbIndex*3, GL_UNSIGNED_INT, myindex);
     glDisableClientState(GL_VERTEX_ARRAY);
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-    glLoadIdentity();
+    //glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    glPopMatrix();
 }
 
 void ObjectOff::set_pos(const double &x, const double &y, const double &z) {

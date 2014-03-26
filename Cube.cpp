@@ -57,6 +57,23 @@ void Cube::display(){
     glDisable(GL_BLEND);
 }		      
 
+void Cube::display(const double r, const double g, const double b, const double alpha){
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glShadeModel(GL_SMOOTH);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); 
+    glColor4d(r,g,b,alpha);
+    glVertexPointer(3,GL_FLOAT,0,point);
+    glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, devant);
+    glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, derriere);
+    glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, droite);
+    glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, gauche);
+    glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, haut);
+    glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, bas);
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisable(GL_BLEND);
+}		      
+
 
 double Cube::_y() const {
     return m_y + m_h;

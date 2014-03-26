@@ -14,6 +14,7 @@ public:
     Cube(double x, double y, double z, double h, double l, double L);
     
     void display();
+    void display(const double r, const double g, const double b, const double alpha);
     double _y() const;
     
 

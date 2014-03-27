@@ -56,7 +56,7 @@ void Camera::setLookAt(position_t pos, int &i) {
 	if (m_phi < -89)
 	    m_phi = -89;
 		
-	static const Vector3D up(0,0,1);
+	static const Vector3D up(0,1,0);
 	double r_temp = cos(m_phi * M_PI/180);
 	m_forward.Y = sin(m_phi * M_PI/180) ;
 
@@ -101,6 +101,12 @@ void Camera::calc_high(const High_Calc & h, const Cube & c ) {
     }
     if(e[DOWN]) {
 	m_position -= m_forward * realspeed;
+    }
+    if (e[LEFT] ) {
+	m_position += m_left * realspeed;
+    }
+    if ( e[RIGHT] ) {
+    	m_position -= m_left * realspeed;
     }
     m_target = m_position + m_forward;
 }

@@ -108,7 +108,7 @@ int main(int argc, char ** argv) {
     en.getCamera()->setLook(0,100,100,80,-10,80,0,1,0); 
 
     vector <float> position;
-    for ( int i = 0 ; i < 1 * 3 ; i+=3 ) {
+    for ( int i = 0 ; i < 0 * 3 ; i+=3 ) {
 	double x, y, z;
 	do {
 	    x = (double)(rand()%h.get_w()*zoom_x+1);
@@ -123,7 +123,7 @@ int main(int argc, char ** argv) {
 
 
     vector<Tree> vec_tree;
-    for(int i = 0; i < 400; i++) {
+    for(int i = 0; i < 1000; i++) {
 	double x, y, z, he, wi;
 	do {
 	    x = (double)(rand()%h.get_w() + 1);

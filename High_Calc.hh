@@ -2,6 +2,7 @@
 #define _HIGH_CALC
 
 #include <vector>
+#include <GL/glut.h>
 #include <math.h>
 
 class High_Calc {
@@ -15,6 +16,11 @@ public:
     
 
     double get_high(const double & , const double &)const;
+
+    void genere_Normal();
+    void Vecteur_Unite(float _norm[], int);
+
+    void display();
 
     int * get_vertex();
     float * get_point();
@@ -30,6 +36,7 @@ private:
     std::vector < int > height;
     float * point;
     float * color;
+    float * norm;
     int size;
     int * vert;
     int W;

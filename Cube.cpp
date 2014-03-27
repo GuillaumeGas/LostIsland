@@ -37,6 +37,7 @@ Cube::Cube(double x,double y,double z, double h, double l, double L):m_x(x), m_y
 
     count[0] = 5;
     count[1] = 4;
+    Normal();
 }
 
 							  
@@ -59,11 +60,13 @@ void Cube::display(){
 
 void Cube::display(const double r, const double g, const double b, const double alpha){
     glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_NORMAL_ARRAY);
     glShadeModel(GL_SMOOTH);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); 
     glColor4d(r,g,b,alpha);
     glVertexPointer(3,GL_FLOAT,0,point);
+    glNormalPointer(GL_FLOAT, 0, norm);
     glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, devant);
     glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, derriere);
     glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, droite);
@@ -71,8 +74,41 @@ void Cube::display(const double r, const double g, const double b, const double 
     glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, haut);
     glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, bas);
     glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_NORMAL_ARRAY);
     glDisable(GL_BLEND);
 }		      
+
+
+
+void Cube::Vecteur_Unite(float norm[3]) {
+    float length;
+    length = (float)sqrt((norm[0] * norm[0]) + (norm[1] * norm[1]) + (norm[2]*norm[2]));
+    if ( length == 0.0f ) {
+	length = 1.0f;
+    }
+    norm[0] /= length;
+    norm[1] /= length;
+    norm[2] /= length;	   
+}
+ 
+
+void Cube::Normal() {
+    int x = 0, y = 1, z = 2;
+    for (int i = 0 ; i < 24 ; i+=3) {
+	
+	float v1[3], v2[3];
+	v1[x] = point[i] - point[i + 3];
+	v1[y] = point[i + 1] - point[ i + 1 + 3];
+	v1[z] = point[i+2] - point[i + 2 + 3];
+	v2[x] = point[i + 3] - point[i + 6];
+	v2[y] = point[i + 3 + 1] - point[i + 6 + 1];
+	v2[z] = point[i + 3 + 2] - point[i + 6 + 2];
+	norm[i] = (v1[y] * v2[z] - v1[z]*v2[y]);
+	norm[i+1] = (v1[z] * v2[x] - v1[x]*v2[z]);
+	norm[i+2] = (v1[x]*v2[y] - v1[y]*v2[x]);
+	Vecteur_Unite(norm);
+    }
+}
 
 
 double Cube::_y() const {

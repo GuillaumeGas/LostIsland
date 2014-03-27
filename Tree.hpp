@@ -10,6 +10,7 @@ public:
     void display();
 
 private:
+
     Cube tronc;
     std::vector<Cube> branches;
     std::vector<Cube> leaves;

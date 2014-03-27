@@ -123,7 +123,7 @@ int main(int argc, char ** argv) {
 
 
     vector<Tree> vec_tree;
-    for(int i = 0; i < 1000; i++) {
+    for(int i = 0; i < 100; i++) {
 	double x, y, z, he, wi;
 	do {
 	    x = (double)(rand()%h.get_w() + 1);
@@ -138,14 +138,16 @@ int main(int argc, char ** argv) {
 
     Event e;
     int i = 0;
-    GLfloat dif[] = {0.0,0.0,0.0,1.0};
+    GLfloat dif[] = {1.0,1.0,1.0,1.0};
     bool retour = false;
     int LightPos[] = {0,100 , 0,1};
     bool retour_lum = false;
+    e[LEFT_CL] = 0;
     while (!e[QUIT] ) {
 	i++;
 	e.UpdateEvent();
 	glMaterialiv(GL_FRONT_AND_BACK,GL_SPECULAR,MatSpec);
+	glMaterialiv(GL_FRONT_AND_BACK,GL_AMBIENT,MatSpec);
 	glMateriali(GL_FRONT_AND_BACK,GL_SHININESS,10); 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
@@ -182,7 +184,7 @@ int main(int argc, char ** argv) {
 	double x = en.getCamera()->target()._X(), y = en.getCamera()->target()._Y(), z = en.getCamera()->target()._Z();
 
 	
-	dessine(h);
+	h.display();
 
 	
 	for(auto it : vec_tree) {
@@ -216,7 +218,7 @@ int main(int argc, char ** argv) {
 
 
 
-
+	/*
 	if ( retour ) {
 	    if ( dif[1] > 0.0f ){
 		dif[1] -= 0.05f;
@@ -235,6 +237,7 @@ int main(int argc, char ** argv) {
 		retour = true;
 	    }
 	}
+	*/
 	c.display();
 	c2.display();
 	stringstream fps;

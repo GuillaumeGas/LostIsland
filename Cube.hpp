@@ -17,11 +17,13 @@ public:
     void display(const double r, const double g, const double b, const double alpha);
     double _y() const;
     
+    void Vecteur_Unite(float norm[3]);
+    void Normal();
 
 private:
 
     double m_x ,m_y, m_z, m_h, m_l, m_L;
-    GLfloat point[24];
+    GLfloat point[24], norm[24];
     GLsizei count[6];
     GLubyte devant[4], derriere[4],
 	droite[4], gauche[4], haut[4], bas[4];

@@ -17,7 +17,7 @@ void Engine::init(string titre, int w, int h) {
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
   gluPerspective(70, (double)h/w, 1, 100000);
-  //glEnable(GL_FOG) ;
+  glEnable(GL_FOG) ;
   GLfloat fogcolor[4] = {0.5, 0.5, 0.5, 1} ;
   GLint fogmode = GL_EXP ;
   glFogi (GL_FOG_MODE, fogmode) ;
